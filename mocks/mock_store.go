@@ -114,3 +114,150 @@ func (mr *MockStoreMockRecorder) GetTransaction(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTransaction", reflect.TypeOf((*MockStore)(nil).GetTransaction), arg0)
 }
+
+// MockAccount is a mock of Account interface.
+type MockAccount struct {
+	ctrl     *gomock.Controller
+	recorder *MockAccountMockRecorder
+	isgomock struct{}
+}
+
+// MockAccountMockRecorder is the mock recorder for MockAccount.
+type MockAccountMockRecorder struct {
+	mock *MockAccount
+}
+
+// NewMockAccount creates a new mock instance.
+func NewMockAccount(ctrl *gomock.Controller) *MockAccount {
+	mock := &MockAccount{ctrl: ctrl}
+	mock.recorder = &MockAccountMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockAccount) EXPECT() *MockAccountMockRecorder {
+	return m.recorder
+}
+
+// CreateAccount mocks base method.
+func (m *MockAccount) CreateAccount(arg0 string) (*model.AccountImpl, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateAccount", arg0)
+	ret0, _ := ret[0].(*model.AccountImpl)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateAccount indicates an expected call of CreateAccount.
+func (mr *MockAccountMockRecorder) CreateAccount(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAccount", reflect.TypeOf((*MockAccount)(nil).CreateAccount), arg0)
+}
+
+// GetAccount mocks base method.
+func (m *MockAccount) GetAccount(arg0 int) (*model.AccountImpl, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAccount", arg0)
+	ret0, _ := ret[0].(*model.AccountImpl)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAccount indicates an expected call of GetAccount.
+func (mr *MockAccountMockRecorder) GetAccount(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAccount", reflect.TypeOf((*MockAccount)(nil).GetAccount), arg0)
+}
+
+// MockOperation is a mock of Operation interface.
+type MockOperation struct {
+	ctrl     *gomock.Controller
+	recorder *MockOperationMockRecorder
+	isgomock struct{}
+}
+
+// MockOperationMockRecorder is the mock recorder for MockOperation.
+type MockOperationMockRecorder struct {
+	mock *MockOperation
+}
+
+// NewMockOperation creates a new mock instance.
+func NewMockOperation(ctrl *gomock.Controller) *MockOperation {
+	mock := &MockOperation{ctrl: ctrl}
+	mock.recorder = &MockOperationMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockOperation) EXPECT() *MockOperationMockRecorder {
+	return m.recorder
+}
+
+// GetOperation mocks base method.
+func (m *MockOperation) GetOperation(arg0 int) (*model.OperationsTypes, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetOperation", arg0)
+	ret0, _ := ret[0].(*model.OperationsTypes)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetOperation indicates an expected call of GetOperation.
+func (mr *MockOperationMockRecorder) GetOperation(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOperation", reflect.TypeOf((*MockOperation)(nil).GetOperation), arg0)
+}
+
+// MockTransaction is a mock of Transaction interface.
+type MockTransaction struct {
+	ctrl     *gomock.Controller
+	recorder *MockTransactionMockRecorder
+	isgomock struct{}
+}
+
+// MockTransactionMockRecorder is the mock recorder for MockTransaction.
+type MockTransactionMockRecorder struct {
+	mock *MockTransaction
+}
+
+// NewMockTransaction creates a new mock instance.
+func NewMockTransaction(ctrl *gomock.Controller) *MockTransaction {
+	mock := &MockTransaction{ctrl: ctrl}
+	mock.recorder = &MockTransactionMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockTransaction) EXPECT() *MockTransactionMockRecorder {
+	return m.recorder
+}
+
+// CreateTransaction mocks base method.
+func (m *MockTransaction) CreateTransaction(arg0 model.TransactionImpl) (*model.TransactionImpl, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateTransaction", arg0)
+	ret0, _ := ret[0].(*model.TransactionImpl)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateTransaction indicates an expected call of CreateTransaction.
+func (mr *MockTransactionMockRecorder) CreateTransaction(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTransaction", reflect.TypeOf((*MockTransaction)(nil).CreateTransaction), arg0)
+}
+
+// GetTransaction mocks base method.
+func (m *MockTransaction) GetTransaction(arg0 string) (*model.TransactionImpl, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetTransaction", arg0)
+	ret0, _ := ret[0].(*model.TransactionImpl)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetTransaction indicates an expected call of GetTransaction.
+func (mr *MockTransactionMockRecorder) GetTransaction(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTransaction", reflect.TypeOf((*MockTransaction)(nil).GetTransaction), arg0)
+}

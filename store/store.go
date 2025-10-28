@@ -10,9 +10,23 @@ import (
 )
 
 type Store interface {
-	model.Operation
-	model.Transaction
-	model.Account
+	Account
+	Operation
+	Transaction
+}
+
+type Account interface {
+	GetAccount(int) (*model.AccountImpl, error)
+	CreateAccount(string) (*model.AccountImpl, error)
+}
+
+type Operation interface {
+	GetOperation(int) (*model.OperationsTypes, error)
+}
+
+type Transaction interface {
+	GetTransaction(string) (*model.TransactionImpl, error)
+	CreateTransaction(model.TransactionImpl) (*model.TransactionImpl, error)
 }
 
 var _ Store = &StoreImpl{}
