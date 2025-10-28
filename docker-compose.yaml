@@ -1,0 +1,29 @@
+services:
+  server:
+    volumes:
+      - ".:/go/src/"
+    container_name: server
+    image: golang:latest
+    command: sh -c "
+      cd src &&
+      sleep 10s &&
+      go run main.go"
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+  db:
+    container_name: db
+    image: mysql
+    restart: always
+    hostname: db
+    environment:
+      MYSQL_USER: storeuser
+      MYSQL_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_HOST: "host.docker.internal"
+      MYSQL_DATABASE: store
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/:ro
+    ports:
+      - "3306:3306"

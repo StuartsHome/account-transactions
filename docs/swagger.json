@@ -1,0 +1,56 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/accounts": {
+            "post": {
+                "description": "Creates an account with the provided document number.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "account"
+                ],
+                "summary": "Create a new account",
+                "responses": {}
+            }
+        },
+        "/accounts/{accountId}": {
+            "get": {
+                "description": "Retrieve an account with the provided account ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "account"
+                ],
+                "summary": "Retrieves an account by ID",
+                "responses": {}
+            }
+        },
+        "/transactions": {
+            "post": {
+                "description": "Creates a transaction with the provided account ID, operation type ID, and amount.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "transaction"
+                ],
+                "summary": "Create a new transaction",
+                "responses": {}
+            }
+        }
+    }
+}

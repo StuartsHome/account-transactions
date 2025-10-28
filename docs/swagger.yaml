@@ -1,0 +1,38 @@
+info:
+  contact: {}
+paths:
+  /accounts:
+    post:
+      consumes:
+      - application/json
+      description: Creates an account with the provided document number.
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new account
+      tags:
+      - account
+  /accounts/{accountId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve an account with the provided account ID.
+      produces:
+      - application/json
+      responses: {}
+      summary: Retrieves an account by ID
+      tags:
+      - account
+  /transactions:
+    post:
+      consumes:
+      - application/json
+      description: Creates a transaction with the provided account ID, operation type
+        ID, and amount.
+      produces:
+      - application/json
+      responses: {}
+      summary: Create a new transaction
+      tags:
+      - transaction
+swagger: "2.0"
