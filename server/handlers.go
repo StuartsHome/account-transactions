@@ -19,6 +19,11 @@ import (
 //	@Tags			account
 //	@Accept			json
 //	@Produce		json
+//
+//	@Failure		400	{string}	string	"Bad Request"
+//	@Failure		500	{string}	string	"Internal Server Error"
+//	@Success		200	{object}	model.AccountImpl
+//
 //	@Router			/accounts/{accountId} [get]
 func HandleGetAccount(db store.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -55,8 +60,12 @@ func HandleGetAccount(db store.Store) http.HandlerFunc {
 //	@Tags			account
 //	@Accept			json
 //	@Produce		json
-//	@Router			/accounts [post]
 //	@Body			{object} model.AccountImpl
+//
+//	@Failure		500	{string}	string	"Internal Server Error"
+//	@Success		201	{object}	model.AccountImpl
+//
+//	@Router			/accounts [post]
 func HandleAccountPost(db store.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		account := model.AccountImpl{}
@@ -93,8 +102,13 @@ func HandleAccountPost(db store.Store) http.HandlerFunc {
 //	@Tags			transaction
 //	@Accept			json
 //	@Produce		json
+//	@Body			model.TransactionImpl	true		"Transaction to create"
+//
+//	@Failure		404						{string}	string	"Not Found"
+//	@Failure		500						{string}	string	"Internal Server Error"
+//	@Success		201						{object}	model.TransactionImpl
+//
 //	@Router			/transactions [post]
-//	@Body			model.TransactionImpl	true	"Transaction to create"
 func HandleTransactionPost(db store.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 

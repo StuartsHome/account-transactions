@@ -9,6 +9,11 @@ import (
 
 var port = ":8080"
 
+//	@title			account-transactions API
+//	@version		1.0
+//	@description	API for managing accounts and transactions.
+
+// @host	localhost:8080
 func main() {
 	log.Printf("listening on port %s\n", port)
 

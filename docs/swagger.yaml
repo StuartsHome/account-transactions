@@ -1,5 +1,28 @@
+definitions:
+  model.AccountImpl:
+    properties:
+      account_id:
+        type: integer
+      document_number:
+        type: string
+    type: object
+  model.TransactionImpl:
+    properties:
+      account_id:
+        type: integer
+      amount:
+        type: number
+      operation_type_id:
+        type: integer
+      transaction_id:
+        type: integer
+    type: object
+host: localhost:8080
 info:
   contact: {}
+  description: API for managing accounts and transactions.
+  title: account-transactions API
+  version: "1.0"
 paths:
   /accounts:
     post:
@@ -8,7 +31,15 @@ paths:
       description: Creates an account with the provided document number.
       produces:
       - application/json
-      responses: {}
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.AccountImpl'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
       summary: Create a new account
       tags:
       - account
@@ -19,7 +50,19 @@ paths:
       description: Retrieve an account with the provided account ID.
       produces:
       - application/json
-      responses: {}
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.AccountImpl'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
       summary: Retrieves an account by ID
       tags:
       - account
@@ -31,7 +74,19 @@ paths:
         ID, and amount.
       produces:
       - application/json
-      responses: {}
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.TransactionImpl'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
       summary: Create a new transaction
       tags:
       - transaction
