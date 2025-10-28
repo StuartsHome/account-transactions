@@ -2,14 +2,28 @@ package model
 
 import "time"
 
+type Account interface {
+	GetAccount(int) (*AccountImpl, error)
+	CreateAccount(string) (*AccountImpl, error)
+}
+
 type AccountImpl struct {
 	AccountID      *int   `json:"account_id" db:"Account_ID"`
 	DocumentNumber string `json:"document_number" db:"Document_Number"`
 }
 
+type Operation interface {
+	GetOperation(int) (*OperationsTypes, error)
+}
+
 type OperationsTypes struct {
-	OperationTypeID int    `json:"OperationType_ID" db:"OperationType_ID"`
-	Description     string `json:"Description" db:"Description"`
+	OperationTypeID int    `json:"operation_type_id" db:"OperationType_ID"`
+	Description     string `json:"description" db:"Description"`
+}
+
+type Transaction interface {
+	GetTransaction(string) (*TransactionImpl, error)
+	CreateTransaction(TransactionImpl) (*TransactionImpl, error)
 }
 
 type TransactionImpl struct {

@@ -10,11 +10,9 @@ import (
 )
 
 type Store interface {
-	GetAccount(int) (*model.AccountImpl, error)
-	GetOperation(int) (*model.OperationsTypes, error)
-	GetTransaction(string) (*model.TransactionImpl, error)
-	CreateAccount(string) (*model.AccountImpl, error)
-	CreateTransaction(model.TransactionImpl) (*model.TransactionImpl, error)
+	model.Operation
+	model.Transaction
+	model.Account
 }
 
 var _ Store = &StoreImpl{}
