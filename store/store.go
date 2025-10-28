@@ -24,16 +24,6 @@ type StoreImpl struct {
 
 var dbport = 3306
 
-func NewStore() Store {
-	db := New()
-	if db == nil {
-		log.Println(fmt.Errorf("unnable to connect to db"))
-		return nil
-	}
-	// Using the mysql db.
-	return db
-}
-
 func New() *StoreImpl {
 	db, err := connect()
 	if err != nil {
