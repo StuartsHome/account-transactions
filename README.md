@@ -56,5 +56,5 @@ curl -XGET "http://0.0.0.0:8080/accounts/1"
 ```sh
 curl -XPOST "http://0.0.0.0:8080/transactions" \
 -H "Content-Type: application/json" \
--d '{"account_id": "1", "operation_type_id": 4, "amount": 123.45}'
+-d '{"account_id": 1, "operation_type_id": 4, "amount": 123.45}'
 ```
