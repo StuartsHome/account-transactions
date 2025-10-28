@@ -17,6 +17,8 @@ type Store interface {
 	CreateTransaction(model.TransactionImpl) (*model.TransactionImpl, error)
 }
 
+var _ Store = &StoreImpl{}
+
 type StoreImpl struct {
 	db *sqlx.DB
 	Store
