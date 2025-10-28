@@ -25,7 +25,7 @@ type Operation interface {
 }
 
 type Transaction interface {
-	GetTransaction(string) (*model.TransactionImpl, error)
+	GetTransaction(int) (*model.TransactionImpl, error)
 	CreateTransaction(model.TransactionImpl) (*model.TransactionImpl, error)
 }
 

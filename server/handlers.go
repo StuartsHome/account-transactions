@@ -102,7 +102,7 @@ func HandleAccountPost(db store.Store) http.HandlerFunc {
 //	@Tags			transaction
 //	@Accept			json
 //	@Produce		json
-//	@Body			model.TransactionImpl	true		"Transaction to create"
+//	@Body			model.TransactionImpl	true				"Transaction to create"
 //
 //	@Failure		404						{string}	string	"Not Found"
 //	@Failure		500						{string}	string	"Internal Server Error"

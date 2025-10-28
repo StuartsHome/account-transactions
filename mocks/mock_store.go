@@ -101,7 +101,7 @@ func (mr *MockStoreMockRecorder) GetOperation(arg0 any) *gomock.Call {
 }
 
 // GetTransaction mocks base method.
-func (m *MockStore) GetTransaction(arg0 string) (*model.TransactionImpl, error) {
+func (m *MockStore) GetTransaction(arg0 int) (*model.TransactionImpl, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetTransaction", arg0)
 	ret0, _ := ret[0].(*model.TransactionImpl)
@@ -248,7 +248,7 @@ func (mr *MockTransactionMockRecorder) CreateTransaction(arg0 any) *gomock.Call 
 }
 
 // GetTransaction mocks base method.
-func (m *MockTransaction) GetTransaction(arg0 string) (*model.TransactionImpl, error) {
+func (m *MockTransaction) GetTransaction(arg0 int) (*model.TransactionImpl, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetTransaction", arg0)
 	ret0, _ := ret[0].(*model.TransactionImpl)

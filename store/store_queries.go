@@ -32,13 +32,13 @@ func (s *StoreImpl) GetOperation(operationId int) (*model.OperationImpl, error) 
 	return &account, err
 }
 
-func (s *StoreImpl) GetTransaction(transactionId string) (*model.TransactionImpl, error) {
+func (s *StoreImpl) GetTransaction(transactionId int) (*model.TransactionImpl, error) {
 
 	var transaction model.TransactionImpl
 	err := s.db.Get(&transaction, "SELECT Transaction_ID, Account_ID, OperationType_ID, Amount FROM Transactions WHERE Transaction_ID=?", transactionId)
 	switch {
 	case err == sql.ErrNoRows:
-		err = fmt.Errorf("no transaction with id %s, err: %v", transactionId, err)
+		err = fmt.Errorf("no transaction with id %d, err: %v", transactionId, err)
 	case err != nil:
 		err = fmt.Errorf("query error: %v", err)
 	}
