@@ -24,7 +24,6 @@ func HandleGetAccount(db store.Store) func(w http.ResponseWriter, r *http.Reques
 
 		// Get account ID from URL params.
 		accountId := chi.URLParam(r, "accountId")
-		fmt.Printf("accountId: %#v\n", accountId)
 
 		gotAccount, err := db.GetAccount(accountId)
 		if err != nil {
