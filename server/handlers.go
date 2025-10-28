@@ -107,7 +107,7 @@ func HandleTransactionPost(db store.Store) func(w http.ResponseWriter, r *http.R
 		// Validate account id.
 		_, err = db.GetAccount(transaction.AccountID)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			w.WriteHeader(http.StatusNotFound)
 			w.Write(fmt.Appendf(nil, "err account doesn't exist %v", err))
 			return
 		}
@@ -115,7 +115,7 @@ func HandleTransactionPost(db store.Store) func(w http.ResponseWriter, r *http.R
 		// Validate operation id.
 		_, err = db.GetOperation(transaction.OperationTypeID)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			w.WriteHeader(http.StatusNotFound)
 			w.Write(fmt.Appendf(nil, "err operation doesn't exist %v", err))
 			return
 		}
