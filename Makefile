@@ -19,7 +19,10 @@ start-local: build
 	./bin/main
 
 ## Mocks.
-mocks:
+remove-mocks:
+	rm -rf mocks/*
+
+mocks: remove-mocks
 	mockgen -source=store/store.go -destination mocks/mock_store.go
 
 ## Tests.
@@ -27,7 +30,9 @@ test: mocks
 	go test -v ./...
 
 ## Docs.
-docs:
+remove-docs:
 	rm -rf docs
+
+docs: remove-docs
 	swag init
 	swag fmt
