@@ -19,7 +19,7 @@ import (
 //	@Accept			json
 //	@Produce		json
 //	@Router			/accounts/{accountId} [get]
-func HandleGetAccount(db store.Store) func(w http.ResponseWriter, r *http.Request) {
+func HandleGetAccount(db store.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		// Get account ID from URL params.
@@ -49,7 +49,7 @@ func HandleGetAccount(db store.Store) func(w http.ResponseWriter, r *http.Reques
 //	@Produce		json
 //	@Router			/accounts [post]
 //	@Body			{object} model.AccountImpl
-func HandleAccountPost(db store.Store) func(w http.ResponseWriter, r *http.Request) {
+func HandleAccountPost(db store.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		account := model.AccountImpl{}
 
@@ -87,7 +87,7 @@ func HandleAccountPost(db store.Store) func(w http.ResponseWriter, r *http.Reque
 //	@Produce		json
 //	@Router			/transactions [post]
 //	@Body			model.TransactionImpl	true	"Transaction to create"
-func HandleTransactionPost(db store.Store) func(w http.ResponseWriter, r *http.Request) {
+func HandleTransactionPost(db store.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		transaction := model.TransactionImpl{}
