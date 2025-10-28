@@ -126,7 +126,7 @@ func TestCreateTransaction_Success(t *testing.T) {
 		WillReturnResult(sqlmock.NewResult(1, 1))
 
 	// When.
-	transaction, err := store.PutTransaction(*model.NewTransaction(nil, "123", 4, 5000.00, nil))
+	transaction, err := store.CreateTransaction(*model.NewTransaction(nil, "123", 4, 5000.00, nil))
 
 	// Then.
 	require.NoError(t, err)
@@ -154,7 +154,7 @@ func TestCreateTransaction_Fail(t *testing.T) {
 		WillReturnError(sql.ErrConnDone)
 
 	// When.
-	transaction, err := store.PutTransaction(*model.NewTransaction(nil, "123", 4, 5000.00, nil))
+	transaction, err := store.CreateTransaction(*model.NewTransaction(nil, "123", 4, 5000.00, nil))
 
 	// Then.
 	require.Error(t, err)

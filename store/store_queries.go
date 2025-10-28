@@ -67,7 +67,7 @@ func (s *StoreImpl) CreateAccount(docNumber string) (*model.AccountImpl, error) 
 	return account, err
 }
 
-func (s *StoreImpl) PutTransaction(transaction model.TransactionImpl) (*model.TransactionImpl, error) {
+func (s *StoreImpl) CreateTransaction(transaction model.TransactionImpl) (*model.TransactionImpl, error) {
 	stmt, err := s.db.Prepare("INSERT INTO Transactions(Account_ID, OperationType_ID, Amount, EventDate) VALUES( ?, ?, ?, Now() )")
 	if err != nil {
 		return nil, err
