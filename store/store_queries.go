@@ -19,9 +19,9 @@ func (s *StoreImpl) GetAccount(accountId int) (*model.AccountImpl, error) {
 	return &account, err
 }
 
-func (s *StoreImpl) GetOperation(operationId int) (*model.OperationsTypes, error) {
+func (s *StoreImpl) GetOperation(operationId int) (*model.OperationImpl, error) {
 
-	var account model.OperationsTypes
+	var account model.OperationImpl
 	err := s.db.Get(&account, "SELECT OperationType_ID, Description FROM OperationsTypes WHERE OperationType_ID=?", operationId)
 	switch {
 	case err == sql.ErrNoRows:

@@ -86,10 +86,10 @@ func (mr *MockStoreMockRecorder) GetAccount(arg0 any) *gomock.Call {
 }
 
 // GetOperation mocks base method.
-func (m *MockStore) GetOperation(arg0 int) (*model.OperationsTypes, error) {
+func (m *MockStore) GetOperation(arg0 int) (*model.OperationImpl, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetOperation", arg0)
-	ret0, _ := ret[0].(*model.OperationsTypes)
+	ret0, _ := ret[0].(*model.OperationImpl)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -194,10 +194,10 @@ func (m *MockOperation) EXPECT() *MockOperationMockRecorder {
 }
 
 // GetOperation mocks base method.
-func (m *MockOperation) GetOperation(arg0 int) (*model.OperationsTypes, error) {
+func (m *MockOperation) GetOperation(arg0 int) (*model.OperationImpl, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetOperation", arg0)
-	ret0, _ := ret[0].(*model.OperationsTypes)
+	ret0, _ := ret[0].(*model.OperationImpl)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

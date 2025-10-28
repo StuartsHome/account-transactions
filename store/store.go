@@ -21,7 +21,7 @@ type Account interface {
 }
 
 type Operation interface {
-	GetOperation(int) (*model.OperationsTypes, error)
+	GetOperation(int) (*model.OperationImpl, error)
 }
 
 type Transaction interface {

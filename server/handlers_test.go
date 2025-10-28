@@ -121,7 +121,7 @@ func TestHandleTransactionPost(t *testing.T) {
 		}, nil)
 	m.EXPECT().
 		GetOperation(4).
-		Return(&model.OperationsTypes{
+		Return(&model.OperationImpl{
 			OperationTypeID: 4,
 			Description:     "PAYMENT",
 		}, nil)

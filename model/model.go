@@ -7,7 +7,7 @@ type AccountImpl struct {
 	DocumentNumber string `json:"document_number" db:"Document_Number"`
 }
 
-type OperationsTypes struct {
+type OperationImpl struct {
 	OperationTypeID int    `json:"operation_type_id" db:"OperationType_ID"`
 	Description     string `json:"description" db:"Description"`
 }
