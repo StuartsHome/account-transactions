@@ -2,7 +2,7 @@
 
 The server and database are containerised. The details of the two can be found in the file `docker-compose.yaml` located in the root of the project.
 
-It is prefered to run the server locally and the database using a container. To run both in a container the file `store/store.go` needs to be modified on line 51 to set the variable `localServer` to `false`.
+It is prefered to run the server locally and the database using a container. To run both in a container the file `store/store.go` needs to be modified on line 55 to set the variable `localServer` to `false`.
 
 The database runs an entrypoint SQL file on startup to create the user, tables and some test data.  
 The SQL file is located in `sql/init.sql`
