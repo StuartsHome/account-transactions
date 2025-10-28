@@ -71,7 +71,7 @@ func (mr *MockStoreMockRecorder) CreateTransaction(arg0 any) *gomock.Call {
 }
 
 // GetAccount mocks base method.
-func (m *MockStore) GetAccount(arg0 string) (*model.AccountImpl, error) {
+func (m *MockStore) GetAccount(arg0 int) (*model.AccountImpl, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAccount", arg0)
 	ret0, _ := ret[0].(*model.AccountImpl)

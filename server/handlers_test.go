@@ -41,9 +41,9 @@ func TestHandleGetAccount(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	m := mock_store.NewMockStore(ctrl)
 	m.EXPECT().
-		GetAccount(accountId).
+		GetAccount(accountIdInt).
 		Return(&model.AccountImpl{
-			AccountID:      model.IntToPtr(123),
+			AccountID:      model.IntToPtr(accountIdInt),
 			DocumentNumber: documentNumber,
 		}, nil)
 
@@ -102,7 +102,7 @@ func TestHandleAccountPost(t *testing.T) {
 
 func TestHandleTransactionPost(t *testing.T) {
 	// Given.
-	transaction := model.NewTransaction(&transactionID, accountId, 4, 5000.00, nil)
+	transaction := model.NewTransaction(&transactionID, accountIdInt, 4, 5000.00, nil)
 
 	marshalledTransaction, err := json.Marshal(transaction)
 	require.NoError(t, err)
@@ -114,7 +114,7 @@ func TestHandleTransactionPost(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	m := mock_store.NewMockStore(ctrl)
 	m.EXPECT().
-		GetAccount(accountId).
+		GetAccount(accountIdInt).
 		Return(&model.AccountImpl{
 			AccountID:      &accountIdInt,
 			DocumentNumber: documentNumber,
@@ -129,7 +129,7 @@ func TestHandleTransactionPost(t *testing.T) {
 		CreateTransaction(*transaction).
 		Return(&model.TransactionImpl{
 			TransactionID:   &transactionID,
-			AccountID:       accountId,
+			AccountID:       accountIdInt,
 			OperationTypeID: 4,
 			Amount:          5000.00,
 		}, nil)

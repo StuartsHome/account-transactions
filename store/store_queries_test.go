@@ -3,6 +3,7 @@ package store
 import (
 	"account-transactions/model"
 	"database/sql"
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,14 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+)
+
+var (
+	accountId        = "123"
+	accountIdInt     = 123
+	invalidAccountId = 999
+	documentNumber   = "20251027"
+	transactionID    = 111
 )
 
 func TestGetAccount_Success(t *testing.T) {
@@ -22,20 +31,20 @@ func TestGetAccount_Success(t *testing.T) {
 	store := &StoreImpl{db: sqlxDB}
 
 	rows := sqlmock.NewRows([]string{"Account_ID", "Document_Number"}).
-		AddRow(123, "20251027")
+		AddRow(accountIdInt, documentNumber)
 
 	mock.ExpectQuery("SELECT Account_ID, Document_Number FROM Accounts WHERE Account_ID=?").
-		WithArgs("123").
+		WithArgs(accountIdInt).
 		WillReturnRows(rows)
 
 	// When.
-	account, err := store.GetAccount("123")
+	account, err := store.GetAccount(accountIdInt)
 
 	// Then.
 	require.NoError(t, err)
 	expectedAccount := &model.AccountImpl{
-		AccountID:      model.IntToPtr(123),
-		DocumentNumber: "20251027",
+		AccountID:      model.IntToPtr(accountIdInt),
+		DocumentNumber: documentNumber,
 	}
 	assert.Equal(t, expectedAccount, account)
 }
@@ -50,16 +59,16 @@ func TestGetAccount_NotFound(t *testing.T) {
 	store := &StoreImpl{db: sqlxDB}
 
 	mock.ExpectQuery("SELECT Account_ID, Document_Number FROM Accounts WHERE Account_ID=?").
-		WithArgs("999").
+		WithArgs(invalidAccountId).
 		WillReturnError(sql.ErrNoRows)
 
 	// When.
-	account, err := store.GetAccount("999")
+	account, err := store.GetAccount(invalidAccountId)
 
 	// Then.
 	require.Error(t, err)
 	assert.Equal(t, model.NewAccount(nil, ""), account)
-	assert.Contains(t, err.Error(), "no account with id 999")
+	assert.Contains(t, err.Error(), fmt.Sprintf("no account with id %d", invalidAccountId))
 }
 
 func TestCreateAccount_Success(t *testing.T) {
@@ -122,17 +131,17 @@ func TestCreateTransaction_Success(t *testing.T) {
 
 	mock.ExpectPrepare(regexp.QuoteMeta(`INSERT INTO Transactions(Account_ID, OperationType_ID, Amount, EventDate) VALUES( ?, ?, ?, Now() )`)).
 		ExpectExec().
-		WithArgs("123", 4, 5000.00).
-		WillReturnResult(sqlmock.NewResult(1, 1))
+		WithArgs(accountIdInt, 4, 5000.00).
+		WillReturnResult(sqlmock.NewResult(int64(transactionID), 1))
 
 	// When.
-	transaction, err := store.CreateTransaction(*model.NewTransaction(nil, "123", 4, 5000.00, nil))
+	transaction, err := store.CreateTransaction(*model.NewTransaction(nil, accountIdInt, 4, 5000.00, nil))
 
 	// Then.
 	require.NoError(t, err)
 	expectedTransaction := &model.TransactionImpl{
-		TransactionID:   model.IntToPtr(1),
-		AccountID:       "123",
+		TransactionID:   &transactionID,
+		AccountID:       accountIdInt,
 		OperationTypeID: 4,
 		Amount:          5000.00,
 	}
@@ -150,11 +159,13 @@ func TestCreateTransaction_Fail(t *testing.T) {
 
 	mock.ExpectPrepare(regexp.QuoteMeta(`INSERT INTO Transactions(Account_ID, OperationType_ID, Amount, EventDate) VALUES( ?, ?, ?, Now() )`)).
 		ExpectExec().
-		WithArgs("123", 4, 5000.00).
+		WithArgs(accountIdInt, 4, 5000.00).
 		WillReturnError(sql.ErrConnDone)
 
 	// When.
-	transaction, err := store.CreateTransaction(*model.NewTransaction(nil, "123", 4, 5000.00, nil))
+	transaction, err := store.CreateTransaction(
+		*model.NewTransaction(nil, accountIdInt, 4, 5000.00, nil),
+	)
 
 	// Then.
 	require.Error(t, err)

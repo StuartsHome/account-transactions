@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -24,8 +25,15 @@ func HandleGetAccount(db store.Store) http.HandlerFunc {
 
 		// Get account ID from URL params.
 		accountId := chi.URLParam(r, "accountId")
+		// Convert string to int.
+		accountIdInt, err := strconv.Atoi(accountId)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write(fmt.Appendf(nil, "invalid account ID %s: %v", accountId, err))
+			return
+		}
 
-		gotAccount, err := db.GetAccount(accountId)
+		gotAccount, err := db.GetAccount(accountIdInt)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write(fmt.Appendf(nil, "account not found with ID %s: %v", accountId, err))

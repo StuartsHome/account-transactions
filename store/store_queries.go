@@ -6,13 +6,13 @@ import (
 	"fmt"
 )
 
-func (s *StoreImpl) GetAccount(accountId string) (*model.AccountImpl, error) {
+func (s *StoreImpl) GetAccount(accountId int) (*model.AccountImpl, error) {
 
 	var account model.AccountImpl
 	err := s.db.Get(&account, "SELECT Account_ID, Document_Number FROM Accounts WHERE Account_ID=?", accountId)
 	switch {
 	case err == sql.ErrNoRows:
-		err = fmt.Errorf("no account with id %s, err: %v", accountId, err)
+		err = fmt.Errorf("no account with id %d, err: %v", accountId, err)
 	case err != nil:
 		err = fmt.Errorf("query error: %v", err)
 	}

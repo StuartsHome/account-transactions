@@ -14,7 +14,7 @@ type OperationsTypes struct {
 
 type TransactionImpl struct {
 	TransactionID   *int       `json:"transaction_id" db:"Transaction_ID"`
-	AccountID       string     `json:"account_id" db:"Account_ID"`
+	AccountID       int        `json:"account_id" db:"Account_ID"`
 	OperationTypeID int        `json:"operation_type_id" db:"OperationType_ID"`
 	Amount          float32    `json:"amount" db:"Amount"`
 	EventDate       *time.Time `json:"-" db:"EventDate"`
@@ -27,7 +27,7 @@ func NewAccount(accountId *int, documentNumber string) *AccountImpl {
 	}
 }
 
-func NewTransaction(transactionId *int, accountId string, operationTypeId int, amount float32, eventDate *time.Time) *TransactionImpl {
+func NewTransaction(transactionId *int, accountId int, operationTypeId int, amount float32, eventDate *time.Time) *TransactionImpl {
 	return &TransactionImpl{
 		TransactionID:   transactionId,
 		AccountID:       accountId,

@@ -10,7 +10,7 @@ import (
 )
 
 type Store interface {
-	GetAccount(string) (*model.AccountImpl, error)
+	GetAccount(int) (*model.AccountImpl, error)
 	GetOperation(int) (*model.OperationsTypes, error)
 	GetTransaction(string) (*model.TransactionImpl, error)
 	CreateAccount(string) (*model.AccountImpl, error)
