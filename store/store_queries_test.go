@@ -80,7 +80,7 @@ func TestCreateAccount_Success(t *testing.T) {
 	sqlxDB := sqlx.NewDb(db, "sqlmock")
 	store := &StoreImpl{db: sqlxDB}
 
-	mock.ExpectPrepare("INSERT INTO Accounts\\(Document_Number\\) VALUES\\( \\? \\)").
+	mock.ExpectPrepare(regexp.QuoteMeta(`INSERT INTO Accounts(Document_Number) VALUES( ? )`)).
 		ExpectExec().
 		WithArgs("20251027").
 		WillReturnResult(sqlmock.NewResult(1, 1))
@@ -106,7 +106,7 @@ func TestCreateAccount_Fail(t *testing.T) {
 	sqlxDB := sqlx.NewDb(db, "sqlmock")
 	store := &StoreImpl{db: sqlxDB}
 
-	mock.ExpectPrepare("INSERT INTO Accounts\\(Document_Number\\) VALUES\\( \\? \\)").
+	mock.ExpectPrepare(regexp.QuoteMeta(`INSERT INTO Accounts(Document_Number) VALUES( ? )`)).
 		ExpectExec().
 		WithArgs("20251027").
 		WillReturnError(sql.ErrConnDone)
