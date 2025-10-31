@@ -148,7 +148,8 @@ func HandleTransactionPost(db store.Store) http.HandlerFunc {
 			transaction.Balance = balance
 		} else if operation.IsPayment() {
 			// get all transactions:	 gets transactions
-			transactions, err := db.GetNegativeTransactions(transaction.AccountID, transaction.OperationTypeID)
+			var operationTypePayment = 1
+			transactions, err := db.GetNegativeTransactions(transaction.AccountID, operationTypePayment)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 				w.Write(fmt.Appendf(nil, "err %v", err))
