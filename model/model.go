@@ -54,6 +54,7 @@ func ProcessNegativePayments(transactions Transactions, amount float32) (Transac
 		// If payment + amount > 0
 		if currAmount > 0 && currAmount+transaction.Balance >= 0 {
 			currAmount += transaction.Balance
+			transactions[i].Balance = 0
 		} else if currAmount > 0 && currAmount+transaction.Balance < 0 {
 			// Partial payment
 			transactions[i].Balance += currAmount
