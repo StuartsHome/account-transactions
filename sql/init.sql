@@ -33,6 +33,7 @@ CREATE TABLE Transactions (
     Account_ID int NOT NULL,
     OperationType_ID int NOT NULL,
     Amount DECIMAL (18,2) NOT NULL,
+    Balance DECIMAL (18,2) DEFAULT 0.00 NOT NULL,
     EventDate DATETIME NOT NULL,
     PRIMARY KEY (Transaction_ID),
     FOREIGN KEY (Account_ID) REFERENCES Accounts(Account_ID),

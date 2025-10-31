@@ -135,11 +135,39 @@ func HandleTransactionPost(db store.Store) http.HandlerFunc {
 		}
 
 		// Validate operation id.
-		_, err = db.GetOperation(transaction.OperationTypeID)
+		operation, err := db.GetOperation(transaction.OperationTypeID)
 		if err != nil {
 			w.WriteHeader(http.StatusNotFound)
 			w.Write(fmt.Appendf(nil, "err operation doesn't exist %v", err))
 			return
+		}
+
+		// Check if purchase.
+		if operation.IsPurchase() {
+			balance := transaction.Amount
+			transaction.Balance = balance
+		} else if operation.IsPayment() {
+			// get all transactions:	 gets transactions
+			transactions, err := db.GetNegativeTransactions(transaction.AccountID, transaction.OperationTypeID)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write(fmt.Appendf(nil, "err %v", err))
+				return
+			}
+
+			// process payments:	 	list of transactions
+			processNegativeTransactions, amount, err := model.ProcessNegativePayments(transactions, transaction.Amount)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write(fmt.Appendf(nil, "err %v", err))
+				return
+			}
+
+			// set transactions with payments: set transactions
+			err = db.UpdateNegativeTransactions(processNegativeTransactions)
+			transaction.Balance = amount
+		} else {
+			transaction.Balance = 0
 		}
 
 		// Store.

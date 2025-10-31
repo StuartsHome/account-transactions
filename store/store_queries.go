@@ -43,8 +43,46 @@ func (s *StoreImpl) GetTransaction(transactionId int) (*model.TransactionImpl, e
 		err = fmt.Errorf("query error: %v", err)
 	}
 	return &transaction, err
-
 }
+
+func (s *StoreImpl) GetNegativeTransactions(accountId int, operationType int) (model.Transactions, error) {
+
+	var transactions model.Transactions
+
+	rows, err := s.db.Query("SELECT Transaction_ID, Account_ID, OperationType_ID, Amount, Balance FROM Transactions WHERE Account_ID=? AND OperationType_ID=? AND Balance < 0 ORDER BY EventDate", accountId, operationType)
+	if err != nil {
+		return transactions, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var transaction model.TransactionImpl
+		if err := rows.Scan(&transaction.TransactionID, &transaction.AccountID, &transaction.OperationTypeID, &transaction.Amount, &transaction.Balance); err != nil {
+			return transactions, err
+		}
+
+		transactions = append(transactions, transaction)
+	}
+	return transactions, err
+}
+
+func (s *StoreImpl) UpdateNegativeTransactions(transactions model.Transactions) error {
+	for _, transaction := range transactions {
+		stmt, err := s.db.Prepare("UPDATE Transactions SET Balance=? WHERE Transaction_ID=?")
+		if err != nil {
+			return err
+		}
+		defer stmt.Close() // Prepared statements take up server resources and should be closed after use.
+
+		_, err = stmt.Exec(transaction.Balance, transaction.TransactionID)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (s *StoreImpl) CreateAccount(docNumber string) (*model.AccountImpl, error) {
 
 	stmt, err := s.db.Prepare("INSERT INTO Accounts(Document_Number) VALUES( ? )")
@@ -68,13 +106,13 @@ func (s *StoreImpl) CreateAccount(docNumber string) (*model.AccountImpl, error) 
 }
 
 func (s *StoreImpl) CreateTransaction(transaction model.TransactionImpl) (*model.TransactionImpl, error) {
-	stmt, err := s.db.Prepare("INSERT INTO Transactions(Account_ID, OperationType_ID, Amount, EventDate) VALUES( ?, ?, ?, Now() )")
+	stmt, err := s.db.Prepare("INSERT INTO Transactions(Account_ID, OperationType_ID, Amount, Balance, EventDate) VALUES( ?, ?, ?, ?, Now() )")
 	if err != nil {
 		return nil, err
 	}
 	defer stmt.Close() // Prepared statements take up server resources and should be closed after use.
 
-	res, err := stmt.Exec(transaction.AccountID, transaction.OperationTypeID, transaction.Amount)
+	res, err := stmt.Exec(transaction.AccountID, transaction.OperationTypeID, transaction.Amount, transaction.Balance)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +123,7 @@ func (s *StoreImpl) CreateTransaction(transaction model.TransactionImpl) (*model
 	}
 
 	transactionId := int(lastId)
-	resultTransaction := model.NewTransaction(&transactionId, transaction.AccountID, transaction.OperationTypeID, transaction.Amount, nil)
+	transaction.TransactionID = &transactionId
 
-	return resultTransaction, err
+	return &transaction, err
 }
